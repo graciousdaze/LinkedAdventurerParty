@@ -15,4 +15,14 @@ public class LinkedAdventurerParty {
 		head = null;
 		manyItems = 0;
 	}
+	
+	/**
+	 * Returns the current size of the list
+	 * 
+	 * @return The number of nodes in the list
+	 */
+	public int size()
+	{
+		return manyItems;
+	}
 }
