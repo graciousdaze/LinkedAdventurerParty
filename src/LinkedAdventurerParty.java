@@ -48,5 +48,55 @@ public class LinkedAdventurerParty {
 		
 		return result;
 	}
+	
+	/**
+	 * Adds a new element to the beginning of the list
+	 * 
+	 * @param element Adventurer data to be added to the new node
+	 */
+	public void add(Adventurer element)
+	{
+		head = new AdventurerNode(element, head);
+		manyItems++;
+	}
+	
+	public void add(int position, Adventurer element) 
+	{
+		AdventurerNode current = head;
+		
+		//If position is greater than the number of elements in the list...
+		if(position > manyItems)
+		{
+			//...add the new element at the end of the list
+			while(current.getLink() != null)
+			{
+				current = current.getLink();
+			}
+			
+			current.setLink(new AdventurerNode(element, current.getLink()));
+			manyItems++;
+		}
+		//If position is not 0 or negative...
+		else if(position == 1)
+		{
+			this.add(element);
+		}
+		else if(position > 0)
+		{
+			int count = 2;	//Keep track of current position in list
+			
+			//While the count is not equal to the position
+			while(count != position)
+			{
+				//Set current to the next node and increment count
+				current = current.getLink();
+				count++;
+			}
+			
+			//Add the new node in at the designated position
+			current.setLink(new AdventurerNode(element, current.getLink()));
+			manyItems++;
+		}
+	}
 
 }
