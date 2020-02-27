@@ -60,6 +60,18 @@ public class LinkedAdventurerParty {
 		manyItems++;
 	}
 	
+	/**
+	 * Adds a new element to a specified position in the list:
+	 * 
+	 * If position > number of elements in the list, the element is added to the end
+	 *    position == 1, the element is added to head of list
+	 *    position < 1, the element is not added to the list
+	 *    
+	 * Otherwise, the element is added to the specified position in the list
+	 * 
+	 * @param position Position to add the element in at
+	 * @param element Adventurer data to be added into the list
+	 */
 	public void add(int position, Adventurer element) 
 	{
 		AdventurerNode current = head;
@@ -76,11 +88,12 @@ public class LinkedAdventurerParty {
 			current.setLink(new AdventurerNode(element, current.getLink()));
 			manyItems++;
 		}
-		//If position is not 0 or negative...
+		//If position is 1 add to the head
 		else if(position == 1)
 		{
 			this.add(element);
 		}
+		//If position is not 0 or negative...
 		else if(position > 0)
 		{
 			int count = 2;	//Keep track of current position in list
