@@ -257,4 +257,34 @@ public class LinkedAdventurerParty {
 		//Return the adventurer object held in the node at the position
 		return current.getData();
 	}
+	
+	/**
+	 * This method searches for an object in the list and returns the position
+	 * of its first occurrence
+	 * 
+	 * @param target Adventurer object to search for
+	 * @return int > 0, If the object is found its position is returned
+	 * 		   -1		If the object is not found 
+	 */
+	public int positionOf(Adventurer target)
+	{
+		int count = 1;	//Tracks current position
+		AdventurerNode current = head;	//Tracks current node
+		
+		//While the current node being checked is not null...
+		while(current != null)
+		{
+			//If the current node's data is equal to the target, return the position
+			if(current.getData().compareTo(target) == 0)
+				return count;
+			
+			//Otherwise set the current node to the next node in the list
+			//and increment the position count
+			current = current.getLink();
+			count++;
+		}
+		
+		//Return -1 if the target is not found in the list
+		return -1;
+	}
 }
