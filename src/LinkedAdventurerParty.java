@@ -230,4 +230,31 @@ public class LinkedAdventurerParty {
 		return total;
 	}
 
+	/**
+	 * Grabs an item at the given position and returns it
+	 * 
+	 * @param position Location of the item to be returned
+	 * @return Adventurer object if an item exists at the given position
+	 * 		   Null if the position is less than 1 or beyond list length
+	 */
+	public Adventurer grab(int position)
+	{
+		//If position is less than 1 or beyond list length, return null
+		if(position < 1 || position > manyItems)
+			return null;
+		
+		int count = 1;	//Tracks current position
+		AdventurerNode current = head;	//Tracks current node
+		
+		//While the current position is not equal to target position
+		while(count != position)
+		{
+			//Set current to next node in the list and increment count
+			current = current.getLink();
+			count++;
+		}
+		
+		//Return the adventurer object held in the node at the position
+		return current.getData();
+	}
 }
