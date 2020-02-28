@@ -1,6 +1,11 @@
 /**
  * A collection class that stores Adventurer objects by using a linked list
  * 
+ * Invariants:
+ * 1. The elements in the bag are stored in a linked list
+ * 2. The start of the list is stored in a variable called head
+ * 3. The total number of items in the list are stored in a variable manyItems
+ * 
  * @author Grace O'Brien
  * March 5th, 2020
  *
@@ -197,6 +202,32 @@ public class LinkedAdventurerParty {
 			return true;
 		}
 		
+	}
+	
+	/**
+	 * This method counts the number of adventurers in the list whose search key falls within the given range
+	 * 
+	 * @param start Adventurer object, where the range begins
+	 * @param end Adventurer object, where the range ends
+	 * @return Total number of items that fall within the range
+	 */
+	public int countRange(Adventurer start, Adventurer end)
+	{
+		int total = 0;	//Tracks items in range
+		AdventurerNode current = head; //Tracks current node
+		
+		//While the current node to compare to is not null...
+		while(current != null)
+		{
+			//Check if the current node's data falls between the start and end range
+			if(current.getData().compareTo(start) <= 0 && current.getData().compareTo(end) >= 0)
+				total++;
+				
+			//Set current to next node in list
+			current = current.getLink();
+		}
+		
+		return total;
 	}
 
 }
