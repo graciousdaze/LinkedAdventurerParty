@@ -364,4 +364,33 @@ public class LinkedAdventurerParty {
 		//Return the total number of levels
 		return total;
 	}
+	
+	/**
+	 * Creates a new linked list of all the objects in the calling list
+	 * that are less than or equal to the param based on the search key
+	 * 
+	 * @param element	Adventurer object to be compared to
+	 * @return	LinkedAdventurerParty, a new list with all the objects that are
+	 * 			equal to or less than the element compared to
+	 */
+	public LinkedAdventurerParty lessThanEqualTo(Adventurer element)
+	{
+		//New list to be added to
+		LinkedAdventurerParty newParty = new LinkedAdventurerParty();
+		AdventurerNode current = head;	//Tracks current Node
+		
+		//While the current node is not null...
+		while(current != null)
+		{
+			//...check if the node is less than or equal to the element and add to list if so
+			if(current.getData().compareTo(element) <= 0)
+				newParty.add(current.getData());
+			
+			//Set current node to next node in list
+			current = current.getLink();
+		}
+		
+		//Return the new list
+		return newParty;
+	}
 }
