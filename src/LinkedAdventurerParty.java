@@ -110,6 +110,93 @@ public class LinkedAdventurerParty {
 			current.setLink(new AdventurerNode(element, current.getLink()));
 			manyItems++;
 		}
+		
+	}
+	
+	/**
+	 * This method removes an adventurer object from the list
+	 * 
+	 * @param target The adventurer to be removed from the list
+	 * @return True If a match was found and removed
+	 * 		   False If no matches are found, and thus no object removed
+	 */
+	public boolean remove(Adventurer target)
+	{
+		AdventurerNode current = head;
+		
+		//Check if the head node equals the target...
+		if(current.getData().equals(target))
+		{
+			//...if so, set head to its link and return true
+			head = head.getLink();
+			manyItems--;
+			return true;
+		}
+		
+		//While the current node is not null...
+		while(current.getLink() != null)
+		{
+			//...check if the data in the current's link equals the target
+			if(current.getLink().getData().equals(target))
+			{
+				//...if it is equal, set the link for the current node, to
+				//the link held by the node to be removed
+				current.setLink(current.getLink().getLink());
+				manyItems--;
+				return true;
+			}
+			
+			//...otherwise set current to the current node's link
+			current = current.getLink();
+		}
+		
+		//Return false if no match was found
+		return false;
+	}
+	
+	/**
+	 * This method removes an object from a list at the given position
+	 * 
+	 * @param position The position of the item to be removed
+	 * @return True If an item was found at the position and removed
+	 * 		   False If position was less than 1 or beyond list length
+	 */
+	public boolean remove(int position)
+	{
+		//If position is 1...
+		if(position == 1)
+		{
+			//...set head to the next node in the list
+			head = head.getLink();
+			manyItems--;
+			return true;
+		}
+		//Else if position is less than 1 or beyond list length...
+		else if(position < 1 || position > manyItems)
+		{
+			//...position does not exist in list, return false
+			return false;
+		}
+		else
+		{
+			int count = 1;					//Flag to track current position
+			AdventurerNode current = head;	//Flag to track current node
+			
+			//While the count does not equal position minus 1...
+			while(count != position-1)
+			{
+				//...set the current node to the next node in the list
+				current = current.getLink();
+				count++;
+			}
+			
+			//Once current is set to the node prior to the node to be removed
+			//set the current node's link to the link of the next node
+			current.setLink(current.getLink().getLink());
+			manyItems--;
+			return true;
+		}
+		
 	}
 
 }
