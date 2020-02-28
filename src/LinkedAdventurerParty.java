@@ -340,4 +340,28 @@ public class LinkedAdventurerParty {
 		//Otherwise return false
 		return false;
 	}
+	
+	/**
+	 * Returns the total value of the int data contained in each Adventurer
+	 * item in the list
+	 * 
+	 * @return int total value of the levels of all the Adventurers in the list
+	 */
+	public int totalValue()
+	{
+		int total = 0;	//Tracks current total
+		AdventurerNode current = head;	//Tracks current node
+		
+		//While the current node is not null...
+		while(current != null)
+		{
+			//...add the current Adventurer object's level to the total
+			total += current.getData().getLevel();
+			//Set current node to the next node in the list
+			current = current.getLink();
+		}
+		
+		//Return the total number of levels
+		return total;
+	}
 }
