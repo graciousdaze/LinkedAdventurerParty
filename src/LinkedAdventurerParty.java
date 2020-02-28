@@ -314,4 +314,30 @@ public class LinkedAdventurerParty {
 			current.setData(element);
 		}
 	}
+	
+	/**
+	 * Searches for an Adventurer in the list, if found, the data is updated
+	 * and replaced with new Adventurer
+	 * 
+	 * @param oldThing	Adventurer object data to be replaced
+	 * @param newThing  Adventurer object data to update to
+	 * @return	True	If the data is successfully found and updated
+	 * 			False 	If the data is not found, and not updated
+	 */
+	public boolean replace(Adventurer oldThing, Adventurer newThing)
+	{
+		//Find the position of the old item
+		int position = this.positionOf(oldThing);
+		
+		//If resulting position is not negative...
+		if(position > 0)
+		{
+			//...replace the object at the position with the new object and return true
+			this.set(position, newThing);
+			return true;
+		}
+		
+		//Otherwise return false
+		return false;
+	}
 }
