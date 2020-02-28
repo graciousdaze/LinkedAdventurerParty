@@ -287,4 +287,31 @@ public class LinkedAdventurerParty {
 		//Return -1 if the target is not found in the list
 		return -1;
 	}
+	
+	/**
+	 * Updates the data at a specified position
+	 * 
+	 * @param position	Position of the data to be updated
+	 * @param element	New data to be updated to
+	 */
+	public void set(int position, Adventurer element)
+	{
+		//If the position is greater than 0 and does not exceed the list length...
+		if(position > 0 && position <= manyItems)
+		{
+			int count = 1;	//Track current position
+			AdventurerNode current = head;	//Track current node
+		
+			//While current position is not equal to target position...
+			while(count != position)
+			{
+				//Set current node to next node in list, and increment the position
+				current = current.getLink();
+				count++;
+			}
+			
+			//Once the target node is found, update its data with the new data
+			current.setData(element);
+		}
+	}
 }
