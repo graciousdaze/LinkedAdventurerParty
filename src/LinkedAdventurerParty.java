@@ -458,4 +458,37 @@ public class LinkedAdventurerParty {
 			return null;
 		}
 	}
+	
+	/**
+	 * This method searches the list for the object with the lowest search key
+	 * 
+	 * @return The Adventurer object with the lowest search key
+	 */
+	public Adventurer getMin()
+	{
+		try
+		{
+			AdventurerNode current = head.getLink();	//Tracks current node
+			Adventurer currentMin = head.getData();		//Tracks current min object
+		
+			//While the current node being checked is not null...
+			while(current != null)
+			{
+				//If the current node's data is less than the current min, set as new min
+				if(current.getData().compareTo(currentMin) < 0)
+					currentMin = current.getData();
+
+				//Set current node to the next node in the list
+				current = current.getLink();
+			}
+		
+			//Return the lowest object found
+			return currentMin;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return null;
+		}
+	}
 }
