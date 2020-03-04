@@ -127,45 +127,39 @@ public class LinkedAdventurerParty {
 	 */
 	public boolean remove(Adventurer target)
 	{
+		if(manyItems == 0)
+			return false;
 		
-		try 
+		AdventurerNode current = head;
+	
+		//Check if the head node equals the target...
+		if(current.getData().equals(target))
 		{
-			AdventurerNode current = head;
-		
-			//Check if the head node equals the target...
-			if(current.getData().equals(target))
+			//...if so, set head to its link and return true
+			head = head.getLink();
+			manyItems--;
+			return true;
+		}
+	
+		//While the current node is not null...
+		while(current.getLink() != null)
+		{
+			//...check if the data in the current's link equals the target
+			if(current.getLink().getData().equals(target))
 			{
-				//...if so, set head to its link and return true
-				head = head.getLink();
+				//...if it is equal, set the link for the current node, to
+				//the link held by the node to be removed
+				current.setLink(current.getLink().getLink());
 				manyItems--;
 				return true;
 			}
 		
-			//While the current node is not null...
-			while(current.getLink() != null)
-			{
-				//...check if the data in the current's link equals the target
-				if(current.getLink().getData().equals(target))
-				{
-					//...if it is equal, set the link for the current node, to
-					//the link held by the node to be removed
-					current.setLink(current.getLink().getLink());
-					manyItems--;
-					return true;
-				}
-			
-				//...otherwise set current to the current node's link
-				current = current.getLink();
-			}
+			//...otherwise set current to the current node's link
+			current = current.getLink();
+		}
 		
-			//Return false if no match was found
-			return false;
-		}
-		catch(Exception e)
-		{
-			System.out.println(e);
-			return false;
-		}
+		//Return false if no match was found
+		return false;
 	}
 	
 	/**
@@ -177,48 +171,42 @@ public class LinkedAdventurerParty {
 	 */
 	public boolean remove(int position)
 	{
-		try
+		if(manyItems == 0)
+			return false;
+		
+		//If position is 1...
+		if(position == 1)
 		{
-			//If position is 1...
-			if(position == 1)
-			{
-				//...set head to the next node in the list
-				head = head.getLink();
-				manyItems--;
-				return true;
-			}
-			//Else if position is less than 1 or beyond list length...
-			else if(position < 1 || position > manyItems)
-			{
-				//...position does not exist in list, return false
-				return false;
-			}
-			else
-			{
-				int count = 1;					//Flag to track current position
-				AdventurerNode current = head;	//Flag to track current node
-			
-				//While the count does not equal position minus 1...
-				while(count != position-1)
-				{
-					//...set the current node to the next node in the list
-					current = current.getLink();
-					count++;
-				}
-			
-				//Once current is set to the node prior to the node to be removed
-				//set the current node's link to the link of the next node
-				current.setLink(current.getLink().getLink());
-				manyItems--;
-				return true;
-			}
+			//...set head to the next node in the list
+			head = head.getLink();
+			manyItems--;
+			return true;
 		}
-		catch(Exception e)
+		//Else if position is less than 1 or beyond list length...
+		else if(position < 1 || position > manyItems)
 		{
-			System.out.println(e);
+			//...position does not exist in list, return false
 			return false;
 		}
+		else
+		{
+			int count = 1;					//Flag to track current position
+			AdventurerNode current = head;	//Flag to track current node
 		
+			//While the count does not equal position minus 1...
+			while(count != position-1)
+			{
+				//...set the current node to the next node in the list
+				current = current.getLink();
+				count++;
+			}
+			
+			//Once current is set to the node prior to the node to be removed
+			//set the current node's link to the link of the next node
+			current.setLink(current.getLink().getLink());
+			manyItems--;
+			return true;
+		}
 	}
 	
 	/**
@@ -449,11 +437,13 @@ public class LinkedAdventurerParty {
 	 */
 	public Adventurer getMax()
 	{
-		try 
-		{
-		
+		try {
 			AdventurerNode current = head.getLink();	//Tracks current node
 			Adventurer currentMax = head.getData();		//Tracks current max object
+			
+			//Check if list is empty
+			if(currentMax == null)
+				throw new NullPointerException();
 		
 			//While the current node is not null...
 			while(current != null)
@@ -462,17 +452,17 @@ public class LinkedAdventurerParty {
 				//currentMax to the current node's data
 				if(current.getData().compareTo(currentMax) > 0)
 					currentMax = current.getData();
-			
+		
 				//Set current node to next node in list
 				current = current.getLink();
 			}
-		
+	
 			//Return the object that is the maximum in the list
 			return currentMax;
 		}
-		catch(Exception e)
+		catch(NullPointerException e)
 		{
-			System.out.println(e);
+			System.out.println("Cannot perform on an empty list: " + e);
 			return null;
 		}
 	}
@@ -488,6 +478,10 @@ public class LinkedAdventurerParty {
 		{
 			AdventurerNode current = head.getLink();	//Tracks current node
 			Adventurer currentMin = head.getData();		//Tracks current min object
+			
+			//Check if list is empty
+			if(currentMin == null)
+				throw new NullPointerException();
 		
 			//While the current node being checked is not null...
 			while(current != null)
@@ -503,9 +497,9 @@ public class LinkedAdventurerParty {
 			//Return the lowest object found
 			return currentMin;
 		}
-		catch(Exception e)
+		catch(NullPointerException e)
 		{
-			System.out.println(e);
+			System.out.println("Cannot perform on an empty list: " + e);
 			return null;
 		}
 	}
@@ -546,7 +540,7 @@ public class LinkedAdventurerParty {
 					positionFound = true;	//Mark position as being found
 					manyItems++;
 				}
-				
+					
 				//Set current node to next node in list
 				current = current.getLink();
 			}
@@ -559,5 +553,6 @@ public class LinkedAdventurerParty {
 			}
 			
 		}
+
 	}
 }
