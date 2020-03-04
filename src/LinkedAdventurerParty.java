@@ -422,4 +422,40 @@ public class LinkedAdventurerParty {
 		//Return the new list
 		return newParty;
 	}
+	
+	/**
+	 * This method searches the list for the object with the greatest
+	 * search key
+	 * 
+	 * @return The Adventurer object with the greatest search key
+	 */
+	public Adventurer getMax()
+	{
+		try 
+		{
+		
+			AdventurerNode current = head.getLink();	//Tracks current node
+			Adventurer currentMax = head.getData();		//Tracks current max object
+		
+			//While the current node is not null...
+			while(current != null)
+			{
+				//...if the current node's data is greater than currentMax, update the 
+				//currentMax to the current node's data
+				if(current.getData().compareTo(currentMax) > 0)
+					currentMax = current.getData();
+			
+				//Set current node to next node in list
+				current = current.getLink();
+			}
+		
+			//Return the object that is the maximum in the list
+			return currentMax;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return null;
+		}
+	}
 }
