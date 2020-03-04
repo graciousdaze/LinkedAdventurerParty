@@ -127,36 +127,45 @@ public class LinkedAdventurerParty {
 	 */
 	public boolean remove(Adventurer target)
 	{
-		AdventurerNode current = head;
 		
-		//Check if the head node equals the target...
-		if(current.getData().equals(target))
+		try 
 		{
-			//...if so, set head to its link and return true
-			head = head.getLink();
-			manyItems--;
-			return true;
-		}
+			AdventurerNode current = head;
 		
-		//While the current node is not null...
-		while(current.getLink() != null)
-		{
-			//...check if the data in the current's link equals the target
-			if(current.getLink().getData().equals(target))
+			//Check if the head node equals the target...
+			if(current.getData().equals(target))
 			{
-				//...if it is equal, set the link for the current node, to
-				//the link held by the node to be removed
-				current.setLink(current.getLink().getLink());
+				//...if so, set head to its link and return true
+				head = head.getLink();
 				manyItems--;
 				return true;
 			}
-			
-			//...otherwise set current to the current node's link
-			current = current.getLink();
-		}
 		
-		//Return false if no match was found
-		return false;
+			//While the current node is not null...
+			while(current.getLink() != null)
+			{
+				//...check if the data in the current's link equals the target
+				if(current.getLink().getData().equals(target))
+				{
+					//...if it is equal, set the link for the current node, to
+					//the link held by the node to be removed
+					current.setLink(current.getLink().getLink());
+					manyItems--;
+					return true;
+				}
+			
+				//...otherwise set current to the current node's link
+				current = current.getLink();
+			}
+		
+			//Return false if no match was found
+			return false;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return false;
+		}
 	}
 	
 	/**
@@ -168,38 +177,46 @@ public class LinkedAdventurerParty {
 	 */
 	public boolean remove(int position)
 	{
-		//If position is 1...
-		if(position == 1)
+		try
 		{
-			//...set head to the next node in the list
-			head = head.getLink();
-			manyItems--;
-			return true;
-		}
-		//Else if position is less than 1 or beyond list length...
-		else if(position < 1 || position > manyItems)
-		{
-			//...position does not exist in list, return false
-			return false;
-		}
-		else
-		{
-			int count = 1;					//Flag to track current position
-			AdventurerNode current = head;	//Flag to track current node
-			
-			//While the count does not equal position minus 1...
-			while(count != position-1)
+			//If position is 1...
+			if(position == 1)
 			{
-				//...set the current node to the next node in the list
-				current = current.getLink();
-				count++;
+				//...set head to the next node in the list
+				head = head.getLink();
+				manyItems--;
+				return true;
 			}
+			//Else if position is less than 1 or beyond list length...
+			else if(position < 1 || position > manyItems)
+			{
+				//...position does not exist in list, return false
+				return false;
+			}
+			else
+			{
+				int count = 1;					//Flag to track current position
+				AdventurerNode current = head;	//Flag to track current node
 			
-			//Once current is set to the node prior to the node to be removed
-			//set the current node's link to the link of the next node
-			current.setLink(current.getLink().getLink());
-			manyItems--;
-			return true;
+				//While the count does not equal position minus 1...
+				while(count != position-1)
+				{
+					//...set the current node to the next node in the list
+					current = current.getLink();
+					count++;
+				}
+			
+				//Once current is set to the node prior to the node to be removed
+				//set the current node's link to the link of the next node
+				current.setLink(current.getLink().getLink());
+				manyItems--;
+				return true;
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return false;
 		}
 		
 	}
@@ -213,6 +230,7 @@ public class LinkedAdventurerParty {
 	 */
 	public int countRange(Adventurer start, Adventurer end)
 	{
+		
 		int total = 0;	//Tracks items in range
 		AdventurerNode current = head; //Tracks current node
 		
@@ -489,6 +507,57 @@ public class LinkedAdventurerParty {
 		{
 			System.out.println(e);
 			return null;
+		}
+	}
+	
+	/**
+	 * Inserts items into the list in alphabetical order based on the search key
+	 * 
+	 * @param element Adventurer object to be added into the list
+	 */
+	public void insert(Adventurer element)
+	{
+		AdventurerNode current = head;	//Tracks current node
+		boolean positionFound = false;	//Tracks if the new element's position is found
+		
+		//If the list is 0, add element at head
+		if(manyItems == 0)
+		{
+			head = new AdventurerNode(element, head);
+			manyItems++;
+		}
+		//If the new element is greater than the data at head, add element at head
+		else if(current.getData().compareTo(element) < 0)
+		{
+			head = new AdventurerNode(element, head);
+			manyItems++;
+		}
+		else
+		{
+			//While the current node's link is not null and position has not been found...
+			while(current.getLink() != null && !positionFound)
+			{
+				//...check the data of the next node in the list compared to the new item
+				if(current.getLink().getData().compareTo(element) <= 0)
+				{
+					//If the new element is greater than or equal to the next data in the list,
+					//set the current node's link to a new adventurer node with the new data and the original next node as link
+					current.setLink(new AdventurerNode(element, current.getLink()));
+					positionFound = true;	//Mark position as being found
+					manyItems++;
+				}
+				
+				//Set current node to next node in list
+				current = current.getLink();
+			}
+			
+			//If the position has not been found after traversing the list, add element to end of list
+			if(!positionFound)
+			{
+				current.setLink(new AdventurerNode(element, current.getLink()));
+				manyItems++;
+			}
+			
 		}
 	}
 }
